@@ -1,0 +1,208 @@
+* {
+    box-sizing: border-box;
+}
+
+.Signup {
+    margin: 0;
+    overflow: hidden;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    background-color: #ecf0f3;
+}
+
+.signup {
+    width: 430px;
+    height: 750px;
+    padding: 10px 35px 35px 35px;
+    border-radius: 40px;
+    background-color: #ecf0f3;
+    overflow: auto;
+}
+
+.signup::-webkit-scrollbar {
+  display: none;
+}
+
+.heading {
+    display: flex;
+    margin-top: 125px;
+}
+
+.heading-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.heading-icon svg {
+    font-size: 45px;
+}
+
+.signup-header {
+    position: fixed;
+    top: 35px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    /* margin-bottom: 40px */
+    padding-top: 22px;
+    width: 330px;
+    border-bottom: 1px solid lightgray;
+    background-color: #ecf0f3;
+}
+
+.signup-header h3 {
+    padding: 20px;
+    font-weight: 400;
+}
+
+.active {
+    border-bottom: 4px solid #02c8db;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.inactive {
+    border-bottom: 4px solid #ecf0f3;
+}
+
+/* .logo {
+    background: url();
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 2px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 15px #a7aaaf, -8px -8px 15px #fff;
+} */
+
+.signup-title {
+    text-align: left;
+    font-size: 25px;
+}
+
+.signup-sub-title {
+    text-align: left;
+    font-size: 15px;
+}
+
+.signup-field {
+    width: 100%;
+    padding: 50px 5px 5px 5px;
+}
+
+.signup-field svg {
+    height: 22px;
+    margin: 0 10px -3px 25px;
+    color: #555;
+}
+
+.signup-field input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 18px;
+    color: #555;
+    padding: 20px 10px 20px 5px;
+}
+
+.signup-field input:hover {
+    cursor: pointer;
+} 
+
+.input-field {
+    margin-bottom: 30px;
+    border-radius: 25px;
+    box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    color: #555;
+}
+
+::placeholder {
+    color: lightgray;
+}
+
+.input-field:hover {
+    background-color: lightgray;
+}
+
+.login-button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    background-color: #02c8db;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #fff;
+    transition: all 0.5s;
+}
+
+.login-button:hover {
+    background-color: #50e5b9;
+}
+
+.login-button:active {
+    background-color: #88ef9e;
+}
+
+.cuisines {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cuisine-header {
+    height: 75px;
+    margin-left: 10px;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cuisine-icon {
+    margin-right: 10px;
+}
+
+.cuisines-list-item input {
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+}
+
+.cuisines-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    width: 430px;
+    height: 300px;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.cuisines-list li {
+    margin: 1%;
+}
+
+.cuisines-list-item label {
+    padding: 10px;
+    font-size: 20px;
+    color: #555; 
+    box-shadow: -3px -3px 6px rgba(255, 255, 255, 0.8),
+                2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cuisines-list-item input:checked ~ label{
+    color: #02c8db;
+    transform: scale(0.97);
+    box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.8),
+                3px 3px 8px rgba(0, 0, 0, 0.08);
+}

@@ -45,7 +45,7 @@ function Login() {
                 <div className="field">
                     <div className="username">
                         <PersonOutlineOutlinedIcon />
-                        <input type="username" className="username-input" placeholder="username" />
+                        <input type="text" className="username-input" placeholder="username" />
                     </div>
                     <div className="password">
                         <PersonOutlineOutlinedIcon />

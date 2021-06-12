@@ -1,6 +1,4 @@
-import './App.css';
 import React from 'react';
-import Messaging from './Messaging.jsx';
 import { FoodAppProvider } from './store';
 import {
   BrowserRouter as Router,
@@ -8,12 +6,21 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import './App.css';
+import Messaging from './components/Messaging.jsx';
+import Login from './components/Login.jsx';
+import Signup from './components/Signup.jsx';
+import FooterNavbar from './components/FooterNavbar';
+
+
+
 
 function App() {
   return (
     <FoodAppProvider>
       <div className="App">
-        <Messaging />
+        <Signup />
+        <FooterNavbar />
       </div>
     </FoodAppProvider>
   );

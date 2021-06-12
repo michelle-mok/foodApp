@@ -12,6 +12,11 @@ function Signup() {
     const [signupSelected, setSignupSelected] = useState(true);
     const [cuisines, setCuisines] = useState();
     const [checkedState, setCheckedState] = useState();
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         axios
@@ -27,7 +32,7 @@ function Signup() {
     const handleOnChange = (position) => {
         const updatedCheckedState = checkedState.map((cuisine, index) => index === position ? !cuisine : cuisine
         );
-        console.log('updated check state', updatedCheckedState);
+
         setCheckedState(updatedCheckedState);
     }
 
@@ -41,6 +46,32 @@ function Signup() {
         setSignupSelected(true);
     }
 
+    const handleSubmit = async () => {
+        const userCuisineArray = [];
+        console.log('checked state', checkedState);
+        await checkedState.map((state, index) => {
+            if (state === true) {
+                userCuisineArray.push(index + 1);
+            }
+            return checkedState;
+        })
+        console.log(checkedState);
+        console.log('user xuisine array', userCuisineArray);
+
+        axios
+            .post('http://localhost:3004/userInfo', {
+                firstName: firstname,
+                lastName: lastname,
+                username: username,
+                email: email,
+                password: password,
+                cuisines: userCuisineArray
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => console.log(error))
+    }
 
     return (
         <div className="Signup">
@@ -77,23 +108,23 @@ function Signup() {
                 <div className="signup-field">
                     <div className="input-field">
                         <PersonOutlineOutlinedIcon />
-                        <input type="text" className="firstname-input" placeholder="first name" />
+                        <input type="text" className="firstname-input" placeholder="first name" value={firstname} onChange={(e) => setFirstName(e.target.value)} />
                     </div>
                     <div className="input-field">
                         <PersonOutlineOutlinedIcon />
-                        <input type="text" className="lastname-input" placeholder="last name" />
+                        <input type="text" className="lastname-input" placeholder="last name" value={lastname} onChange={(e) => setLastName(e.target.value)} />
                     </div>
                     <div className="input-field">
                         <PersonOutlineOutlinedIcon />
-                        <input type="username" className="username-input" placeholder="username" />
+                        <input type="username" className="username-input" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="input-field">
                         <LockOutlinedIcon />
-                        <input type="password" className="password-input" placeholder="password" />
+                        <input type="password" className="password-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="input-field">
                         <EmailOutlinedIcon />
-                        <input type="email" className="email-input" placeholder="email" />
+                        <input type="email" className="email-input" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </div>
                 {cuisines && checkedState && (
@@ -122,7 +153,7 @@ function Signup() {
                         </div>
                     </>
                 )}
-                <button className="login-button">Register</button>
+                <button className="login-button" onClick={handleSubmit} >Register</button>
             </div>
         </div>
     )

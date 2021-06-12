@@ -36,14 +36,11 @@
 .active {
     border-bottom: 4px solid #02c8db;
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 .inactive {
     border-bottom: 4px solid #ecf0f3;
-}
-
-.active:hover {
-    border-bottom: 4px solid #50e5b9;
 }
 
 .logo {

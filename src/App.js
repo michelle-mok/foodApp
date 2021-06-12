@@ -1,10 +1,13 @@
 import './App.css';
-import Messaging from './Messaging.jsx';
+import Messaging from './components/Messaging.jsx';
+import Login from './components/Login.jsx';
 
 function App() {
   return (
     <div className="App">
-     <Messaging />
+      <div className="mobileView">
+     <Login />
+      </div>
     </div>
   );
 }

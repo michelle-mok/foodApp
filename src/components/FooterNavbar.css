@@ -1,7 +1,7 @@
 .footer-navbar {
-    position: fixed;
+    position: absolute;
     z-index: 1;
-    bottom: 34px;
+    bottom: 0;
 }
 
 .navbar-list {

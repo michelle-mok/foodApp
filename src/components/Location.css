@@ -1,0 +1,6 @@
+.submit-button {
+    z-index: 5;
+    position: absolute;
+    bottom: 100px;
+    left: 10px;
+}

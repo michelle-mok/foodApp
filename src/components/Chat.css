@@ -1,6 +1,9 @@
 .chat {
+    height: 95%;
+    max-height: 750px;
+    width: 80%;
+    max-width: 400px;
     display: flex;
-    flex: 0.65;
     flex-direction: column;
 }
 
@@ -30,6 +33,10 @@
     background-color: navajowhite;
     padding: 30px;
     overflow: scroll;
+}
+
+.chat_body::-webkit-scrollbar {
+  display: none;
 }
 
 .chat_message {

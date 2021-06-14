@@ -30,10 +30,10 @@ function Chat({ messages }) {
             <div className="chat_header">
                 <Avatar />
                 <div className="chat_headerInfo">
-                    <h3>room name</h3>
+                    <h3>user's name</h3>
                     <p>Last seen at ...</p>
                 </div>
-                <div className="chat_headerRight">
+                {/* <div className="chat_headerRight">
                     <IconButton>
                         <SearchOutlined />
                     </IconButton>
@@ -43,7 +43,7 @@ function Chat({ messages }) {
                     <IconButton>
                         <MoreVert />
                     </IconButton>
-                </div>
+                </div> */}
             </div>
             <div className="chat_body">
                 {messages && (

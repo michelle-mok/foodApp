@@ -11,7 +11,7 @@ import Messaging from './components/Messaging.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import FooterNavbar from './components/FooterNavbar';
-
+import Location from './components/Location.jsx';
 
 
 
@@ -19,8 +19,11 @@ function App() {
   return (
     <FoodAppProvider>
       <div className="App">
-        <Signup />
-        <FooterNavbar />
+        <div className="mobileView">
+          <Location />
+          {/* <Messaging /> */}
+          <FooterNavbar />
+        </div>
       </div>
     </FoodAppProvider>
   );

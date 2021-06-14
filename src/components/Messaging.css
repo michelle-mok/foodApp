@@ -1,15 +1,18 @@
 .messaging {
+    height: 100vh;
+    max-height: 750px;
+    width: 80%;
+    max-width: 400px;
     display: grid;
     place-items: center;
-    height: 100vh;
     background-color: antiquewhite;
 }
 
 .messaging_body {
     display: flex;
     background-color: azure;
-    margin-top: -50px;
-    height: 90vh;
+    margin-top: -30px;
+    height: 88vh;
     width: 90vh;
     box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
 }

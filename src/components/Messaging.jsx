@@ -38,7 +38,7 @@ function Messaging() {
     return (
         <div className="messaging">
             <div className="messaging_body">
-                <SideBar />
+                {/* <SideBar /> */}
                 <Chat messages={messages} />
             </div>
         </div>

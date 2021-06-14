@@ -21,6 +21,7 @@ function App() {
       <div className="App">
         <div className="mobileView">
           <Location />
+          {/* <Messaging /> */}
           <FooterNavbar />
         </div>
       </div>

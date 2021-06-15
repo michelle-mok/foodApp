@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "*",
     "@reach/combobox": "^0.15.1",
     "@react-google-maps/api": "^2.2.0",
     "@testing-library/jest-dom": "^5.13.0",

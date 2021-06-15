@@ -16,7 +16,7 @@
 .signup {
     width: 430px;
     height: 750px;
-    padding: 10px 35px 35px 35px;
+    padding: 10px 35px 70px 35px;
     border-radius: 40px;
     background-color: #ecf0f3;
     overflow: auto;
@@ -42,25 +42,6 @@
 .heading-icon svg {
     font-size: 45px;
 }
-
-.signup-header {
-    position: fixed;
-    top: 35px;
-    z-index: 2;
-    display: flex;
-    justify-content: space-around;
-    /* margin-bottom: 40px */
-    padding-top: 22px;
-    width: 330px;
-    border-bottom: 1px solid lightgray;
-    background-color: #ecf0f3;
-}
-
-.signup-header h3 {
-    padding: 20px;
-    font-weight: 400;
-}
-
 .active {
     border-bottom: 4px solid #02c8db;
     transition: all 0.5s;

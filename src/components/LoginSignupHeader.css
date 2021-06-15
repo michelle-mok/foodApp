@@ -1,0 +1,27 @@
+.header {
+    position: fixed;
+    top: 35px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    /* margin-bottom: 40px */
+    padding-top: 0;
+    width: 330px;
+    border-bottom: 1px solid lightgray;
+    background-color: #ecf0f3;
+}
+
+.header h3 {
+    padding: 20px;
+    font-weight: 400;
+}
+
+.active {
+    border-bottom: 4px solid #02c8db;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.inactive {
+    border-bottom: 4px solid #ecf0f3;
+}

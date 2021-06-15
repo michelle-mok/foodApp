@@ -3,26 +3,67 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 export const initialState = {
-    allUsers: null,
+    userInfo: null,
+    userCuisines: null,
+    friends: null,
+    friendCuisines: null,
+    budget: null,
+
 };
 
-const LOAD_USERS = "LOAD_USERS";
+// const LOAD_USERS = "LOAD_USERS";
+const LOAD_BUDGET = 'LOAD_BUDGET';
+const LOAD_FRIENDS = 'LOAD_FRIENDS';
+const LOAD_FRIENDCUISINES = 'LOAD_FRIENDCUISINES';
 
 export function foodAppReducer (state, action) {
     switch (action.type) {
-        case LOAD_USERS:
-            return {...state, allUsers:action.payload.allUsers};
+        // case LOAD_USERS:
+        //     return {...state, allUsers:action.payload.allUsers};
+        case LOAD_BUDGET:
+            return {...state, budget: action.payload.budget};
+        case LOAD_FRIENDS:
+            return {...state, friends: action.payload.friends};
+        case LOAD_FRIENDCUISINES:
+            return {...state, friendCuisines: action.payload.friendCuisines};
         default:
             return state;
     }
 }
 
 // ######## action creators #########
-function loadUsers (usersObj) {
+// function loadUsers (usersObj) {
+//     return {
+//         type:LOAD_USERS,
+//         payload: {
+//             allUsers: usersObj
+//         }
+//     }
+// }
+
+function loadBudget (integer) {
     return {
-        type:LOAD_USERS,
+        type: LOAD_BUDGET,
         payload: {
-            allUsers: usersObj
+            budget: integer
+        }
+    }
+}
+
+function loadFriends (friendArray) {
+    return {
+        type: LOAD_FRIENDS,
+        payload: {
+            friends: friendArray
+        }
+    }
+}
+
+function loadFriendCuisines (friendCuisinesArray) {
+    return {
+        type: LOAD_FRIENDCUISINES,
+        payload: {
+            friendCuisines: friendCuisinesArray
         }
     }
 }
@@ -37,14 +78,40 @@ export function FoodAppProvider ({ children }) {
     return <Provider value={{ store, dispatch }}>{children}</Provider>
 }
 
+// ############# 
+export function getBudget (dispatch, integer) {
+    console.log('price level', integer);
+    dispatch (loadBudget(integer));
+}
+
+export function getFriends (dispatch, friendArray) {
+    console.log('friend array', friendArray);
+    dispatch (loadFriends(friendArray));
+}
+
 // ######## backend requests #######
 const BACKEND_URL = 'http://localhost:3004';
 
-export function getUsers(dispatch) {
+export function getUsers(setUsers, setCheckedState) {
     axios
       .get(BACKEND_URL + '/users')
       .then((response) => {
           console.log('users object', response.data);
-          dispatch(loadUsers(response.data.users));
+          setUsers(response.data.users);
+           setCheckedState(new Array(response.data.users.length).fill(false));
       })
+      .catch((error) => console.log(error));
+}
+
+export function getFriendCuisines(dispatch, friendArray) {
+    console.log('friend array', friendArray);
+    axios
+        .post(BACKEND_URL + '/friendCuisines', {
+            friends: friendArray
+        })
+        .then((response) => {
+            console.log(response.data);
+            dispatch(loadFriendCuisines(response.data));
+        })
+        .catch((error) => console.log(error));
 }

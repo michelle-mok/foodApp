@@ -1,58 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Login.css';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
+import { Link } from 'react-router-dom';
+import { userLogin, foodAppContext } from '../store';
+import { useHistory } from "react-router-dom";
 
 function Login() {
-    const [loginSelected, setLoginSelected] = useState(true);
-    const [signupSelected, setSignupSelected] = useState(false);
+    let history = useHistory();
+    const { store, dispatch } = useContext(foodAppContext);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleLoginClick = () => {
-        setLoginSelected(true);
-        setSignupSelected(false);
-    }
-
-    const handleSignupClick = () => {
-        setLoginSelected(false);
-        setSignupSelected(true);
+    const handleLoginClick = async () => {
+        userLogin(dispatch, username, password, history);
     }
 
     return (
         <div className="Login">
             <div className="login">
-                <div className="header">
-                    {loginSelected ? (
-                        <div className="active" onClick={handleLoginClick}>
-                            <h3>Log in</h3>
-                        </div>
-                    ) : (
-                        <div className="inactive" onClick={handleLoginClick}>
-                            <h3>Log in</h3>
-                        </div>
-                    )}
-                    {signupSelected ? (
-                        <div className="active" onClick={handleSignupClick}>
-                            <h3>Sign up</h3>
-                        </div>
-                    ) : (
-                        <div className="inactive" onClick={handleSignupClick}>
-                            <h3>Sign up</h3>
-                        </div>
-                    )}
-                </div>
                 <div className="logo"></div>
                 <div className="title">What to eat?</div>
                 <div className="sub-title">We help you decide</div>
                 <div className="field">
                     <div className="username">
                         <PersonOutlineOutlinedIcon />
-                        <input type="text" className="username-input" placeholder="username" />
+                        <input type="text" className="username-input" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="password">
                         <PersonOutlineOutlinedIcon />
-                        <input type="password" className="password-input" placeholder="password" />
+                        <input type="password" className="password-input" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                 </div>
-                <button className="login-button">Log in</button>
+                <button className="login-button" onClick={handleLoginClick}>Log in</button>
             </div>
         </div>
     )

@@ -1,11 +1,10 @@
 // /* global google */
-
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useContext } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import '@reach/combobox/styles.css';
 import Search from './Search.jsx';
 import Locate from './Locate.jsx';
 import './Location.css';
+import { foodAppContext } from '../store';
 
 const libraries = ['places'];
 
@@ -27,6 +26,10 @@ function Location() {
 
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const { store, dispatch } = useContext(foodAppContext);
+    const { budget, everyonesCuisines } = store;
+    console.log('budget from store', budget);
+    console.log('shared cuisines from store', everyonesCuisines);
 
     const handleClick = useCallback((event) => {
         setMarkers([
@@ -53,6 +56,15 @@ function Location() {
         mapRef.current.setZoom(14);
     }, []);
 
+    let queries;
+    if (everyonesCuisines.length > 1) {
+        queries = everyonesCuisines.join(' | ');
+        console.log('queries string----', queries);
+    } else {
+        queries = everyonesCuisines[0];
+    }
+
+
     const handleSubmit = () => {
         const filteredResult = [];
         const userLocation = new google.maps.LatLng(markers[0].lat, markers[0].lng);
@@ -61,8 +73,8 @@ function Location() {
             location: userLocation,
             radius: 5 * 1000,
             type: ['food'],
-            query: 'thai',
-            maxPriceLevel: 2,
+            query: `${queries}`,
+            maxPriceLevel: budget,
             openNow: true,
         }
 

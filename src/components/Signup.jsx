@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
+import LoginSignupHeader from './LoginSignupHeader';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -8,8 +9,6 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import axios from 'axios';
 
 function Signup() {
-    const [loginSelected, setLoginSelected] = useState(false);
-    const [signupSelected, setSignupSelected] = useState(true);
     const [cuisines, setCuisines] = useState();
     const [checkedState, setCheckedState] = useState();
     const [firstname, setFirstName] = useState('');
@@ -34,16 +33,6 @@ function Signup() {
         );
 
         setCheckedState(updatedCheckedState);
-    }
-
-    const handleLoginClick = () => {
-        setLoginSelected(true);
-        setSignupSelected(false);
-    }
-
-    const handleSignupClick = () => {
-        setLoginSelected(false);
-        setSignupSelected(true);
     }
 
     const handleSubmit = async () => {
@@ -76,32 +65,12 @@ function Signup() {
     return (
         <div className="Signup">
             <div className="signup">
-                <div className="signup-header">
-                    {loginSelected ? (
-                        <div className="active" onClick={handleLoginClick}>
-                            <h3>Log in</h3>
-                        </div>
-                    ) : (
-                        <div className="inactive" onClick={handleLoginClick}>
-                            <h3>Log in</h3>
-                        </div>
-                    )}
-                    {signupSelected ? (
-                        <div className="active" onClick={handleSignupClick}>
-                            <h3>Sign up</h3>
-                        </div>
-                    ) : (
-                        <div className="inactive" onClick={handleSignupClick}>
-                            <h3>Sign up</h3>
-                        </div>
-                    )}
-                </div>
                 <div className="heading">
                     <div className="heading-icon">
                         <AccountBoxIcon />
                     </div>
                     <div className="heading-text">
-                        <div className="signup-title">Register</div>
+                        <div className="signup-title">Sign up! </div>
                         <div className="signup-sub-title">Please enter your details</div>
                     </div>
                 </div>
@@ -153,9 +122,9 @@ function Signup() {
                         </div>
                     </>
                 )}
-                <button className="login-button" onClick={handleSubmit} >Register</button>
+                <button className="signup-button" onClick={handleSubmit} >Register</button>
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -3,26 +3,77 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 export const initialState = {
-    allUsers: null,
+    userInfo: null,
+    friends: null,
+    everyonesCuisines: null,
+    budget: null,
 };
 
-const LOAD_USERS = "LOAD_USERS";
+// const LOAD_USERS = "LOAD_USERS";
+const LOAD_BUDGET = 'LOAD_BUDGET';
+const LOAD_FRIENDS = 'LOAD_FRIENDS';
+const LOAD_EVERYONESCUISINES = 'LOAD_FRIENDCUISINES';
+const LOAD_USER = 'LOAD_USER';
 
 export function foodAppReducer (state, action) {
     switch (action.type) {
-        case LOAD_USERS:
-            return {...state, allUsers:action.payload.allUsers};
+        // case LOAD_USERS:
+        //     return {...state, allUsers:action.payload.allUsers};
+        case LOAD_BUDGET:
+            return {...state, budget: action.payload.budget};
+        case LOAD_FRIENDS:
+            return {...state, friends: action.payload.friends};
+        case LOAD_EVERYONESCUISINES:
+            return {...state, everyonesCuisines: action.payload.everyonesCuisines};
+        case LOAD_USER: 
+            return {...state, userInfo: action.payload.userInfo};
         default:
             return state;
     }
 }
 
 // ######## action creators #########
-function loadUsers (usersObj) {
+// function loadUsers (usersObj) {
+//     return {
+//         type:LOAD_USERS,
+//         payload: {
+//             allUsers: usersObj
+//         }
+//     }
+// }
+
+function loadBudget (integer) {
     return {
-        type:LOAD_USERS,
+        type: LOAD_BUDGET,
         payload: {
-            allUsers: usersObj
+            budget: integer
+        }
+    }
+}
+
+function loadFriends (friendArray) {
+    return {
+        type: LOAD_FRIENDS,
+        payload: {
+            friends: friendArray
+        }
+    }
+}
+
+function loadEveryonesCuisines (everyonesCuisinesArray) {
+    return {
+        type: LOAD_EVERYONESCUISINES,
+        payload: {
+            everyonesCuisines: everyonesCuisinesArray
+        }
+    }
+}
+
+function loadUser (userInfoObj) {
+    return {
+        type: LOAD_USER,
+        payload: {
+            userInfo: userInfoObj,
         }
     }
 }
@@ -37,14 +88,59 @@ export function FoodAppProvider ({ children }) {
     return <Provider value={{ store, dispatch }}>{children}</Provider>
 }
 
+// ############# 
+export function getBudget (dispatch, integer) {
+    console.log('price level', integer);
+    dispatch (loadBudget(integer));
+}
+
+export function getFriends (dispatch, friendArray) {
+    console.log('friend array', friendArray);
+    dispatch (loadFriends(friendArray));
+}
+
 // ######## backend requests #######
 const BACKEND_URL = 'http://localhost:3004';
 
-export function getUsers(dispatch) {
+export function getUsers(setUsers, setCheckedState) {
     axios
       .get(BACKEND_URL + '/users')
       .then((response) => {
           console.log('users object', response.data);
-          dispatch(loadUsers(response.data.users));
+          setUsers(response.data.users);
+          setCheckedState(new Array(response.data.users.length).fill(false));
       })
+      .catch((error) => console.log(error));
+}
+
+export function getEveryonesCuisines(dispatch, everyoneArray) {
+    console.log('everyone array', everyoneArray);
+    axios
+        .post(BACKEND_URL + '/everyonesCuisines', {
+            everyone: everyoneArray
+        })
+        .then((response) => {
+            console.log(response.data);
+            dispatch(loadEveryonesCuisines(response.data));
+        })
+        .catch((error) => console.log(error));
+}
+
+export function userLogin (dispatch, username, password, history) {
+    console.log (username, password);
+    axios
+        .post(BACKEND_URL + '/login', {
+            username: username,
+            password: password,
+        })
+        .then((response) => {
+            console.log(response.data);
+            if (response.data) {
+                dispatch(loadUser(response.data));
+                history.push('/home');
+            } else {
+                history.push('/');
+            }
+        })
+        .catch((error) => console.log(error));
 }

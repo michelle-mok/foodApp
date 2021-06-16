@@ -4,17 +4,16 @@ axios.defaults.withCredentials = true;
 
 export const initialState = {
     userInfo: null,
-    userCuisines: null,
     friends: null,
-    friendCuisines: null,
+    everyonesCuisines: null,
     budget: null,
-
 };
 
 // const LOAD_USERS = "LOAD_USERS";
 const LOAD_BUDGET = 'LOAD_BUDGET';
 const LOAD_FRIENDS = 'LOAD_FRIENDS';
-const LOAD_FRIENDCUISINES = 'LOAD_FRIENDCUISINES';
+const LOAD_EVERYONESCUISINES = 'LOAD_FRIENDCUISINES';
+const LOAD_USER = 'LOAD_USER';
 
 export function foodAppReducer (state, action) {
     switch (action.type) {
@@ -24,8 +23,10 @@ export function foodAppReducer (state, action) {
             return {...state, budget: action.payload.budget};
         case LOAD_FRIENDS:
             return {...state, friends: action.payload.friends};
-        case LOAD_FRIENDCUISINES:
-            return {...state, friendCuisines: action.payload.friendCuisines};
+        case LOAD_EVERYONESCUISINES:
+            return {...state, everyonesCuisines: action.payload.everyonesCuisines};
+        case LOAD_USER: 
+            return {...state, userInfo: action.payload.userInfo};
         default:
             return state;
     }
@@ -59,11 +60,20 @@ function loadFriends (friendArray) {
     }
 }
 
-function loadFriendCuisines (friendCuisinesArray) {
+function loadEveryonesCuisines (everyonesCuisinesArray) {
     return {
-        type: LOAD_FRIENDCUISINES,
+        type: LOAD_EVERYONESCUISINES,
         payload: {
-            friendCuisines: friendCuisinesArray
+            everyonesCuisines: everyonesCuisinesArray
+        }
+    }
+}
+
+function loadUser (userInfoObj) {
+    return {
+        type: LOAD_USER,
+        payload: {
+            userInfo: userInfoObj,
         }
     }
 }
@@ -98,20 +108,39 @@ export function getUsers(setUsers, setCheckedState) {
       .then((response) => {
           console.log('users object', response.data);
           setUsers(response.data.users);
-           setCheckedState(new Array(response.data.users.length).fill(false));
+          setCheckedState(new Array(response.data.users.length).fill(false));
       })
       .catch((error) => console.log(error));
 }
 
-export function getFriendCuisines(dispatch, friendArray) {
-    console.log('friend array', friendArray);
+export function getEveryonesCuisines(dispatch, everyoneArray) {
+    console.log('everyone array', everyoneArray);
     axios
-        .post(BACKEND_URL + '/friendCuisines', {
-            friends: friendArray
+        .post(BACKEND_URL + '/everyonesCuisines', {
+            everyone: everyoneArray
         })
         .then((response) => {
             console.log(response.data);
-            dispatch(loadFriendCuisines(response.data));
+            dispatch(loadEveryonesCuisines(response.data));
+        })
+        .catch((error) => console.log(error));
+}
+
+export function userLogin (dispatch, username, password, history) {
+    console.log (username, password);
+    axios
+        .post(BACKEND_URL + '/login', {
+            username: username,
+            password: password,
+        })
+        .then((response) => {
+            console.log(response.data);
+            if (response.data) {
+                dispatch(loadUser(response.data));
+                history.push('/home');
+            } else {
+                history.push('/');
+            }
         })
         .catch((error) => console.log(error));
 }

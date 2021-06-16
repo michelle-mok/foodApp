@@ -3,6 +3,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ChatIcon from '@material-ui/icons/Chat';
 import EditIcon from '@material-ui/icons/Edit';
 import './FooterNavbar.css';
+import { Link } from "react-router-dom";
 
 function FooterNavbar() {
     const [home, setHome] = useState(true);
@@ -33,26 +34,34 @@ function FooterNavbar() {
                 <li className="navbar-list-item">
                     {home ? (
                         <div className="navbar-text-active" onClick={handleHomeClick}>
-                            <HomeIcon />
-                            Home
+                            <Link to='/'>
+                                <HomeIcon />
+                                Home
+                            </Link>
                         </div>
                     ) : (
                         <div className="navbar-text" onClick={handleHomeClick}>
-                            <HomeIcon />
-                            Home
+                            <Link to='/'>
+                                <HomeIcon />
+                                Home
+                            </Link>
                         </div>
                     )}
                 </li>
                 <li className="navbar-list-item">
                     {chat ? (
                         <div className="navbar-text-active" onClick={handleChatClick}>
-                            <ChatIcon />
-                            Chat
+                            <Link to='/chat'>
+                                <ChatIcon />
+                                Chat
+                            </Link>
                         </div>
                     ) : (
                         <div className="navbar-text" onClick={handleChatClick}>
-                            <ChatIcon />
-                            Chat
+                            <Link to='/chat'>
+                                <ChatIcon />
+                                Chat
+                            </Link>
                         </div>
                     )}
                 </li>

@@ -25,6 +25,23 @@
     color: lightgray;
 }
 
+.navbar-text a {
+    text-decoration: none;
+    color: lightgray;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-text-active a {
+    text-decoration: none;
+    color: #02c8db;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s;
+}
+
+
+
 .navbar-list-item {
     width: 30%;
 }
@@ -37,4 +54,6 @@
     font-size: 11px;
     color: #02c8db;
     transition: all 0.5s;
+    
 }
+

@@ -1,5 +1,5 @@
-import React from 'react';
-import { FoodAppProvider } from './store';
+import React, { useContext } from 'react';
+import { FoodAppProvider, foodAppContext } from './store';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -13,22 +13,48 @@ import Signup from './components/Signup.jsx';
 import FooterNavbar from './components/FooterNavbar';
 import Location from './components/Location.jsx';
 import Criteria from './components/Criteria';
+import LoginSignupHeader from './components/LoginSignupHeader';
 
 function App() {
+
   return (
     <FoodAppProvider>
       <div className="App">
+        <Router>
         <div className="mobileView">
+          {/* <Switch> */}
           {/* <Location /> */}
           {/* <Messaging /> */}
           {/* <Login /> */}
           {/* <Signup /> */}
-          <Criteria />
+          {/* <Criteria /> */}
+          <Switch>
+          <Route exact path ='/'>
+            <LoginSignupHeader />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path='/home'>
+            <Criteria />
+          </Route>
+          <Route path='/signup'>
+            <Signup />
+          </Route>
+          <Route path='/chat'> 
+            <Messaging />
+          </Route>
+          <Route path='/map'>
+            <Location />
+          </Route>
+          </Switch>
           <FooterNavbar />
         </div>
+        </Router>
       </div>
     </FoodAppProvider>
   );
 }
 
 export default App;
+

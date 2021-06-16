@@ -65,13 +65,12 @@ function Signup() {
     return (
         <div className="Signup">
             <div className="signup">
-                <LoginSignupHeader />
                 <div className="heading">
                     <div className="heading-icon">
                         <AccountBoxIcon />
                     </div>
                     <div className="heading-text">
-                        <div className="signup-title">Register</div>
+                        <div className="signup-title">Sign up! </div>
                         <div className="signup-sub-title">Please enter your details</div>
                     </div>
                 </div>
@@ -123,7 +122,7 @@ function Signup() {
                         </div>
                     </>
                 )}
-                <button className="login-button" onClick={handleSubmit} >Register</button>
+                <button className="signup-button" onClick={handleSubmit} >Register</button>
             </div>
         </div >
     )

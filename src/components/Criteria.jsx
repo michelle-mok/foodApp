@@ -8,7 +8,9 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import { makeStyles } from "@material-ui/core/styles";
 import './Criteria.css';
-import { getUsers, getBudget, getFriends, getFriendCuisines, foodAppContext } from '../store.js';
+import "@reach/combobox/styles.css";
+import { Link } from 'react-router-dom';
+import { getUsers, getBudget, getEveryonesCuisines, foodAppContext, getFriends } from '../store.js';
 
 const useStyles = makeStyles({
     inputRoot: {
@@ -35,6 +37,9 @@ function Criteria() {
     const [budgetOption, setBudgetOption] = useState();
     const classes = useStyles();
 
+    const { userInfo } = store
+    console.log('userInfo', userInfo);
+
     useEffect(() => {
         getUsers(setUsers, setCheckedState);
     }, []);
@@ -57,17 +62,30 @@ function Criteria() {
     const handleSubmit = async () => {
         getBudget(dispatch, budgetOption);
 
-        const userFriendArray = [];
+        const everyonesIdsArray = [];
         console.log('checked state', checkedState);
         await checkedState.map((state, index) => {
             if (state === true) {
-                userFriendArray.push(index + 1);
+                everyonesIdsArray.push(index + 1);
             }
             return checkedState;
         })
 
-        getFriends(dispatch, userFriendArray);
-        getFriendCuisines(dispatch, userFriendArray);
+        everyonesIdsArray.push(userInfo.id);
+        console.log(everyonesIdsArray);
+
+        const friendInfoArray = [];
+        everyonesIdsArray.forEach((id) => {
+            if (id !== userInfo.id) {
+                friendInfoArray.push({
+                    id: id,
+                    username: users[id].username,
+                })
+            }
+        })
+        console.log('friend info', friendInfoArray);
+        getFriends(dispatch, friendInfoArray);
+        getEveryonesCuisines(dispatch, everyonesIdsArray);
     }
 
     console.log(budgetOption);
@@ -76,7 +94,9 @@ function Criteria() {
     return (
         <div className="criteria">
             <div className="page-header">
-
+                {userInfo && (
+                    <h2>Hello {userInfo.firstName} !</h2>
+                )}
             </div>
             <div className="criteria-header">
                 <div className="criteria-header-icon">
@@ -157,7 +177,9 @@ function Criteria() {
                     />
                 </div>
             )}
-            <button className="login-button" onClick={handleSubmit}>Next step ! </button>
+            < Link to='/map'>
+                <button className="login-button" onClick={handleSubmit}>Next step ! </button>
+            </Link>
         </div>
     )
 }

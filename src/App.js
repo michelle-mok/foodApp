@@ -14,6 +14,7 @@ import FooterNavbar from './components/FooterNavbar';
 import Location from './components/Location.jsx';
 import Criteria from './components/Criteria';
 import LoginSignupHeader from './components/LoginSignupHeader';
+import Results from './components/Results.jsx';
 
 function App() {
 
@@ -46,6 +47,9 @@ function App() {
           </Route>
           <Route path='/map'>
             <Location />
+          </Route>
+          <Route path='/results'>
+            <Results />
           </Route>
           </Switch>
           <FooterNavbar />

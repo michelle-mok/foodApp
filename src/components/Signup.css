@@ -137,11 +137,11 @@
     margin-bottom: 80px;
 }
 
-.login-button:hover {
+.signup-button:hover {
     background-color: #50e5b9;
 }
 
-.login-button:active {
+.signup-button:active {
     background-color: #88ef9e;
 }
 
@@ -191,6 +191,10 @@
     color: #555; 
     box-shadow: -3px -3px 6px rgba(255, 255, 255, 0.8),
                 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cuisines-list-item label:hover {
+    background-color: lightgray;
 }
 
 .cuisines-list-item input:checked ~ label{

@@ -55,7 +55,6 @@ function Criteria() {
     const handleCheck = (position) => {
         const updatedCheckedState = checkedState.map((user, index) => index === position ? !user : user
         );
-        console.log(updatedCheckedState);
         setCheckedState(updatedCheckedState);
     }
 
@@ -63,7 +62,6 @@ function Criteria() {
         getBudget(dispatch, budgetOption);
 
         const everyonesIdsArray = [];
-        console.log('checked state', checkedState);
         await checkedState.map((state, index) => {
             if (state === true) {
                 everyonesIdsArray.push(index + 1);
@@ -84,13 +82,15 @@ function Criteria() {
             }
         })
         console.log('friend info', friendInfoArray);
-        getFriends(dispatch, friendInfoArray);
+        if (everyonesIdsArray.length > 1) {
+            getFriends(dispatch, friendInfoArray);
+        }
         getEveryonesCuisines(dispatch, everyonesIdsArray);
+
     }
 
     console.log(budgetOption);
-    console.log(checkedState);
-    console.log(users);
+
     return (
         <div className="criteria">
             <div className="page-header">

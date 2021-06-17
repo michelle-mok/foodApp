@@ -1,10 +1,10 @@
-// /* global google */
 import React, { useState, useRef, useCallback, useContext } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import Search from './Search.jsx';
 import Locate from './Locate.jsx';
 import './Location.css';
-import { foodAppContext } from '../store';
+import { getResults, foodAppContext } from '../store';
+import { Link, useHistory } from 'react-router-dom';
 
 const libraries = ['places'];
 
@@ -28,8 +28,9 @@ function Location() {
     const [selected, setSelected] = useState(null);
     const { store, dispatch } = useContext(foodAppContext);
     const { budget, everyonesCuisines } = store;
+    let history = useHistory();
+    let queries;
     console.log('budget from store', budget);
-    console.log('shared cuisines from store', everyonesCuisines);
 
     const handleClick = useCallback((event) => {
         setMarkers([
@@ -48,7 +49,6 @@ function Location() {
         console.log('is loaded', isLoaded);
         mapRef.current = map;
         placesServiceRef.current = new google.maps.places.PlacesService(map);
-
     }, [isLoaded]);
 
     const panTo = useCallback(({ lat, lng }) => {
@@ -56,17 +56,16 @@ function Location() {
         mapRef.current.setZoom(14);
     }, []);
 
-    let queries;
-    if (everyonesCuisines.length > 1) {
-        queries = everyonesCuisines.join(' | ');
-        console.log('queries string----', queries);
-    } else {
-        queries = everyonesCuisines[0];
-    }
-
-
     const handleSubmit = () => {
-        const filteredResult = [];
+        console.log('shared cuisines from store', everyonesCuisines);
+        if (everyonesCuisines.length > 1) {
+            queries = everyonesCuisines.join(' | ');
+            console.log('queries string----', queries);
+        } else {
+            queries = everyonesCuisines[0];
+        }
+        console.log('queries', queries);
+
         const userLocation = new google.maps.LatLng(markers[0].lat, markers[0].lng);
         console.log(' user location', userLocation);
         const placesRequest = {
@@ -80,15 +79,23 @@ function Location() {
 
         placesServiceRef.current.textSearch(placesRequest, ((response, status) => {
 
-            const filteredResult = []
+            const filteredResult = [];
             response.forEach((foodOutlet) => {
-                if (foodOutlet.rating > 4 && foodOutlet.business_status === "OPERATIONAL") {
-                    filteredResult.push(foodOutlet);
+                if (foodOutlet.rating > 4 && foodOutlet.business_status === "OPERATIONAL" && filteredResult.length < 3) {
+                    const { name } = foodOutlet;
+                    const address = foodOutlet.formatted_address;
+                    let photoUrl;
+                    if (foodOutlet.photos && foodOutlet.photos.length > 0) {
+                        photoUrl = foodOutlet.photos[0].getUrl();
+
+                    }
+                    filteredResult.push({ name, address, photoUrl });
                 }
             })
 
             console.log('status', status);
             console.log('filtered', filteredResult);
+            getResults(dispatch, filteredResult, history);
         }))
     }
 
@@ -100,6 +107,7 @@ function Location() {
             <Locate panTo={panTo} />
             <Search panTo={panTo} />
             <button type="submit" className="submit-button" onClick={handleSubmit}>Ready!</button>
+
             <GoogleMap mapContainerStyle={mapContainerStyle} zoom={11} center={center} onClick={handleClick} onLoad={(map) => onMapLoad(map)}>
                 {markers && (markers.map((marker) => {
                     return (

@@ -34,7 +34,7 @@ function FooterNavbar() {
                 <li className="navbar-list-item">
                     {home ? (
                         <div className="navbar-text-active" onClick={handleHomeClick}>
-                            <Link to='/'>
+                            <Link to='/home'>
                                 <HomeIcon />
                                 Home
                             </Link>

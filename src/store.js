@@ -7,6 +7,7 @@ export const initialState = {
     friends: null,
     everyonesCuisines: null,
     budget: null,
+    results: null,
 };
 
 // const LOAD_USERS = "LOAD_USERS";
@@ -14,6 +15,7 @@ const LOAD_BUDGET = 'LOAD_BUDGET';
 const LOAD_FRIENDS = 'LOAD_FRIENDS';
 const LOAD_EVERYONESCUISINES = 'LOAD_FRIENDCUISINES';
 const LOAD_USER = 'LOAD_USER';
+const LOAD_RESULTS = 'LOAD_RESULTS';
 
 export function foodAppReducer (state, action) {
     switch (action.type) {
@@ -27,6 +29,8 @@ export function foodAppReducer (state, action) {
             return {...state, everyonesCuisines: action.payload.everyonesCuisines};
         case LOAD_USER: 
             return {...state, userInfo: action.payload.userInfo};
+        case LOAD_RESULTS: 
+            return {...state, results: action.payload.results};
         default:
             return state;
     }
@@ -78,6 +82,15 @@ function loadUser (userInfoObj) {
     }
 }
 
+function loadResults (resultObj) {
+    return {
+        type: LOAD_RESULTS,
+        payload: {
+            results: resultObj,
+        }
+    }
+} 
+
 // ######### Provider ########
 export const foodAppContext = React.createContext(null);
 const { Provider } =foodAppContext;
@@ -99,6 +112,12 @@ export function getFriends (dispatch, friendArray) {
     dispatch (loadFriends(friendArray));
 }
 
+export function getResults (dispatch, resultArray, history) {
+    console.log('result array', resultArray);
+    dispatch(loadResults(resultArray));
+    history.push('/results');
+}
+
 // ######## backend requests #######
 const BACKEND_URL = 'http://localhost:3004';
 
@@ -106,7 +125,6 @@ export function getUsers(setUsers, setCheckedState) {
     axios
       .get(BACKEND_URL + '/users')
       .then((response) => {
-          console.log('users object', response.data);
           setUsers(response.data.users);
           setCheckedState(new Array(response.data.users.length).fill(false));
       })
@@ -143,4 +161,14 @@ export function userLogin (dispatch, username, password, history) {
             }
         })
         .catch((error) => console.log(error));
+}
+
+export function getSuggestedPeople (setSuggestedPeople) {
+    axios
+      .get(BACKEND_URL + '/suggestedPeople')
+      .then((response) => {
+          console.log(response.data);
+          setSuggestedPeople(response.data);
+      })
+      .catch((error) => console.log(error));
 }

@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
-import { FoodAppProvider, foodAppContext } from './store';
+import { FoodAppProvider } from './store';
 import {
   BrowserRouter as Router,
-  Redirect,
   Switch,
   Route,
 } from "react-router-dom";
 import './App.css';
-import Messaging from './components/Messaging.jsx';
+// import Messaging from './components/Messaging.jsx';
+import Chat from './components/Chat.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import FooterNavbar from './components/FooterNavbar';
@@ -15,6 +14,8 @@ import Location from './components/Location.jsx';
 import Criteria from './components/Criteria';
 import LoginSignupHeader from './components/LoginSignupHeader';
 import Results from './components/Results.jsx';
+import RoomList from './components/RoomList.jsx';
+import Edit from './components/Edit.jsx';
 
 function App() {
 
@@ -43,13 +44,19 @@ function App() {
             <Signup />
           </Route>
           <Route path='/chat'> 
-            <Messaging />
+            <Chat />
           </Route>
           <Route path='/map'>
             <Location />
           </Route>
           <Route path='/results'>
             <Results />
+          </Route >
+          <Route path='/chatrooms'>
+            <RoomList />
+          </Route>
+          <Route path='/edit'>
+            <Edit />
           </Route>
           </Switch>
           <FooterNavbar />

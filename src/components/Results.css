@@ -71,6 +71,10 @@
     padding-right: 20px;
 }
 
+.result-button:hover {
+    cursor: pointer;
+}
+
 .suggested-people {
     padding-left: 10px;
     padding-right: 10px;

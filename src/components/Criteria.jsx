@@ -33,15 +33,15 @@ const budget = [
 function Criteria() {
     const { store, dispatch } = useContext(foodAppContext);
     const [users, setUsers] = useState([]);
-    const [checkedState, setCheckedState] = useState();
     const [budgetOption, setBudgetOption] = useState();
+    const [everyonesIdsArray, setEveryonesIdsArray] = useState([]);
     const classes = useStyles();
 
     const { userInfo } = store
     console.log('userInfo', userInfo);
 
     useEffect(() => {
-        getUsers(setUsers, setCheckedState);
+        getUsers(setUsers);
     }, []);
 
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -52,45 +52,41 @@ function Criteria() {
         marginTop: 40,
     }
 
-    const handleCheck = (position) => {
-        const updatedCheckedState = checkedState.map((user, index) => index === position ? !user : user
-        );
-        setCheckedState(updatedCheckedState);
+    const handleCheck = (e) => {
+        console.log(e.target.checked);
+        console.log(e.target.value);
+
+        if (e.target.checked) {
+            setEveryonesIdsArray([...everyonesIdsArray, Number(e.target.value)]);
+        } else {
+            setEveryonesIdsArray(everyonesIdsArray.filter((friend) => friend !== Number(e.target.value)));
+        }
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         getBudget(dispatch, budgetOption);
-
-        const everyonesIdsArray = [];
-        await checkedState.map((state, index) => {
-            if (state === true) {
-                everyonesIdsArray.push(index + 1);
-            }
-            return checkedState;
-        })
-
-        everyonesIdsArray.push(userInfo.id);
         console.log(everyonesIdsArray);
 
         const friendInfoArray = [];
-        everyonesIdsArray.forEach((id) => {
-            if (id !== userInfo.id) {
-                friendInfoArray.push({
-                    id: id,
-                    username: users[id].username,
-                })
-            }
+        everyonesIdsArray.forEach((idNum) => {
+            const friendIndex = users.findIndex((user) => user.id === idNum);
+            console.log(friendIndex);
+            friendInfoArray.push({
+                id: idNum,
+                username: users[friendIndex].username,
+            })
         })
         console.log('friend info', friendInfoArray);
+        everyonesIdsArray.push(userInfo.id);
         if (everyonesIdsArray.length > 1) {
             getFriends(dispatch, friendInfoArray);
         }
         getEveryonesCuisines(dispatch, everyonesIdsArray);
 
     }
-
     console.log(budgetOption);
-
+    // console.log('users', users);
+    // console.log('checked state', checkedState);
     return (
         <div className="criteria">
             <div className="page-header">
@@ -160,7 +156,7 @@ function Criteria() {
                                     checked={selected}
                                     key={user.id}
                                     value={user.id}
-                                    onChange={(event) => { handleCheck(event.target.value - 1) }}
+                                    onChange={(e) => { handleCheck(e) }}
                                 />
                                 {user.username}
                             </React.Fragment>

@@ -1,6 +1,13 @@
 /* * {
     box-sizing: border-box;
 } */
+.edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ecf0f3;
+    height: 700px;
+}
 
 .Signup {
     margin: 0;

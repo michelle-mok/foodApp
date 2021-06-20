@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Signup.css';
-import LoginSignupHeader from './LoginSignupHeader';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import axios from 'axios';
+import { foodAppContext, loadCuisines, newUser, getCheckedState } from '../store';
+import { useHistory } from 'react-router-dom';
 
 function Signup() {
+    let history = useHistory();
+    const { store, dispatch } = useContext(foodAppContext);
     const [cuisines, setCuisines] = useState();
     const [checkedState, setCheckedState] = useState();
     const [firstname, setFirstName] = useState('');
@@ -18,20 +20,12 @@ function Signup() {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3004/cuisines')
-            .then((response) => {
-                console.log(response.data);
-                setCuisines(response.data);
-                setCheckedState(new Array(response.data.length).fill(false));
-            })
-            .catch((error) => console.log(error));
+        loadCuisines(setCuisines, setCheckedState);
     }, [])
 
     const handleOnChange = (position) => {
         const updatedCheckedState = checkedState.map((cuisine, index) => index === position ? !cuisine : cuisine
         );
-
         setCheckedState(updatedCheckedState);
     }
 
@@ -45,21 +39,10 @@ function Signup() {
             return checkedState;
         })
         console.log(checkedState);
+        getCheckedState(dispatch, checkedState);
         console.log('user xuisine array', userCuisineArray);
 
-        axios
-            .post('http://localhost:3004/userInfo', {
-                firstName: firstname,
-                lastName: lastname,
-                username: username,
-                email: email,
-                password: password,
-                cuisines: userCuisineArray
-            })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error) => console.log(error))
+        newUser(dispatch, history, firstname, lastname, username, email, password, userCuisineArray);
     }
 
     return (

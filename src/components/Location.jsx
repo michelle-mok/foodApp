@@ -4,7 +4,7 @@ import Search from './Search.jsx';
 import Locate from './Locate.jsx';
 import './Location.css';
 import { getResults, foodAppContext } from '../store';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const libraries = ['places'];
 
@@ -74,7 +74,7 @@ function Location() {
             type: ['food'],
             query: `${queries}`,
             maxPriceLevel: budget,
-            openNow: true,
+            // openNow: true,
         }
 
         placesServiceRef.current.textSearch(placesRequest, ((response, status) => {

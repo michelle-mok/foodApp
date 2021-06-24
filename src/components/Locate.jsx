@@ -1,6 +1,7 @@
 import React from 'react'
 import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
 import './Locate.css';
+import { IconButton } from '@material-ui/core';
 
 function Locate({ panTo }) {
 
@@ -17,7 +18,9 @@ function Locate({ panTo }) {
 
     return (
         <button className="locate" onClick={handleClick}>
-            <ExploreOutlinedIcon />
+            <IconButton>
+                <ExploreOutlinedIcon />
+            </IconButton>
         </button>
     )
 }

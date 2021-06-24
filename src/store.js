@@ -180,6 +180,17 @@ export function getUsers(setUsers) {
       .catch((error) => console.log(error));
 }
 
+export function getOneUser (dispatch) {
+    axios
+        .get(BACKEND_URL + '/singleUser')
+        .then((response) => {
+            console.log(response.data);
+            dispatch(loadUser(response.data.userInfo));
+            dispatch(loadUserCuisines(response.data.userCuisines));
+        })
+        .catch((error) => console.log(error));
+}
+
 export function getEveryonesCuisines(dispatch, everyoneArray) {
     console.log('everyone array', everyoneArray);
     axios
@@ -236,9 +247,7 @@ export function setupChatRoom (idArray, nameString, history, dispatch) {
 
 export function getChatRoom (id, setChatRoom, setMessages) {
     axios
-        .post(BACKEND_URL + '/getChatRoom', {
-            id: id,
-        })
+        .get(BACKEND_URL + `/getChatRoom/${id}`)
         .then((response) => {
             console.log(response.data);
             setChatRoom(response.data.chatroomDetails);
@@ -343,6 +352,11 @@ export function uploadPhoto (formData, setImage) {
         })
 }
 
-export function getPhoto (image) {
-    console.log('image path')
+export function userLogout (history) {
+    axios
+        .get(BACKEND_URL + '/logout')
+        .then((response) => {
+            console.log(response.data);
+            history.push('/');
+        })
 }

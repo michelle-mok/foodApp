@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import './Criteria.css';
 import "@reach/combobox/styles.css";
 import { Link } from 'react-router-dom';
-import { getUsers, getBudget, getEveryonesCuisines, foodAppContext, getFriends } from '../store.js';
+import { getUsers, getBudget, getEveryonesCuisines, foodAppContext, getFriends, getOneUser } from '../store.js';
 
 const useStyles = makeStyles({
     inputRoot: {
@@ -41,6 +41,10 @@ function Criteria() {
     console.log('userInfo', userInfo);
 
     useEffect(() => {
+        if (!userInfo) {
+            console.log('inside useeffect');
+            getOneUser(dispatch);
+        }
         getUsers(setUsers);
     }, []);
 

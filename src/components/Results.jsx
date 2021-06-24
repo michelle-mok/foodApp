@@ -66,8 +66,6 @@ function Results() {
                                     {friends && (
                                         <div className="result-button" onClick={handleClick}>
                                             <ChatOutlinedIcon />
-                                            <ArrowForwardSharpIcon />
-
                                         </div>
                                     )}
                                     <div className="result-text">
@@ -98,7 +96,6 @@ function Results() {
                                             <h3>{person.username}</h3>
                                             <button className="suggested-person-button" onClick={() => handleSuggestedPersonClick(person.id)}>
                                                 <ChatOutlinedIcon />
-                                                <ArrowForwardSharpIcon />
                                             </button>
                                         </div>
                                     )

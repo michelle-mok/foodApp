@@ -10,7 +10,7 @@
 .sidebar_header {
     display: flex;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 30px 20px;
     border-right: 1px solid lightgray;
 }
 

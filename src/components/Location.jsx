@@ -5,6 +5,7 @@ import Locate from './Locate.jsx';
 import './Location.css';
 import { getResults, foodAppContext } from '../store';
 import { useHistory } from 'react-router-dom';
+import mapStyles from '../mapStyles';
 
 const libraries = ['places'];
 
@@ -17,6 +18,12 @@ const center = {
     lng: 103.822872
 };
 
+const options = {
+    styles: mapStyles,
+    disableDefaultUI: true,
+    zoomControl: true,
+}
+
 function Location() {
     const google = window.google
     const { isLoaded, loadError } = useLoadScript({
@@ -26,6 +33,7 @@ function Location() {
 
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     const { store, dispatch } = useContext(foodAppContext);
     const { budget, everyonesCuisines } = store;
     let history = useHistory();
@@ -57,6 +65,7 @@ function Location() {
     }, []);
 
     const handleSubmit = () => {
+        setShowModal(true);
         console.log('shared cuisines from store', everyonesCuisines);
         if (everyonesCuisines.length > 1) {
             queries = everyonesCuisines.join(' | ');
@@ -110,10 +119,7 @@ function Location() {
                     });
                     counter += 1;
                 }
-                console.log('bananananaaa======')
-
             })
-
             console.log('status', status);
         }))
     }
@@ -123,11 +129,16 @@ function Location() {
 
     return (
         <div className="location">
+            {showModal && (
+                <div className="map-modal">
+                    <img src="https://media.giphy.com/media/3ov9k0BZQL358k458s/giphy.gif" />
+                </div>
+            )}
             <Locate panTo={panTo} />
             <Search panTo={panTo} />
             <button type="submit" className="submit-button" onClick={handleSubmit}>Ready!</button>
 
-            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={11} center={center} onClick={handleClick} onLoad={(map) => onMapLoad(map)}>
+            <GoogleMap mapContainerStyle={mapContainerStyle} zoom={11} center={center} options={options} onClick={handleClick} onLoad={(map) => onMapLoad(map)}>
                 {markers && (markers.map((marker, index) => {
                     return (
                         <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} onClick={() => { setSelected(marker) }} />

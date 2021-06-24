@@ -5,31 +5,35 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import SendIcon from '@material-ui/icons/Send';
-import { foodAppContext, getChatRoom } from '../store.js';
+import { foodAppContext, getChatRoom, getOneUser } from '../store.js';
 import Picker from 'emoji-picker-react';
+import { useParams } from 'react-router-dom';
 
 function Chat() {
     const [input, setInput] = useState('');
-    const { store } = useContext(foodAppContext);
+    const { dispatch, store } = useContext(foodAppContext);
     const { userInfo, friends, chatroom } = store;
     const [chatRoom, setChatRoom] = useState();
     const [messages, setMessages] = useState();
     const [showEmojis, setShowEmojis] = useState();
     const [cursorPosition, setCursorPosition] = useState();
     const inputRef = useRef();
+    const { id } = useParams();
 
     useEffect(() => {
         if (chatroom !== null) {
             getChatRoom(chatroom, setChatRoom, setMessages);
         } else {
-            if (friends) {
-                const friendIds = [];
-                friends.forEach((friend) => {
-                    friendIds.push(friend.id);
-                })
-                friendIds.push(userInfo.id);
-                getChatRoom(friendIds, setChatRoom, setMessages);
-            }
+            // if (friends) {
+            //     const friendIds = [];
+            //     friends.forEach((friend) => {
+            //         friendIds.push(friend.id);
+            //     })
+            //     friendIds.push(userInfo.id);
+            //     getChatRoom(friendIds, setChatRoom, setMessages);
+            // }
+            getOneUser(dispatch);
+            getChatRoom(id, setChatRoom, setMessages);
         }
     }, []);
 
@@ -59,9 +63,6 @@ function Chat() {
 
     const onEmojiClick = (e, { emoji }) => {
         const ref = inputRef.current;
-        // console.log(ref);
-        // console.log(ref.selectionStart);
-        // console.log(ref.selectionEnd);
         ref.focus();
         console.log(ref);
         const start = input.substring(0, ref.selectionStart);
@@ -106,29 +107,33 @@ function Chat() {
                 </div>
             )}
             <div className="chat_body">
-                {messages && (
+                {messages && userInfo && (
                     messages.map((message) => (
-                        message.userId === userInfo.id ? (
-                            <div className="chat-message-user">
-                                <div className="chat-message-top">
-                                    {/* <p className="chat_name">{userInfo.username}</p> */}
-                                </div>
-                                <div className="chat-message-bottom">
-                                    <p className="chat-message-text">{message.message}</p>
-                                    <p className="chat_timestamp">{message.createdAt}</p>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="chat-message-friend">
-                                <div className="chat-message-top">
+                        // message.userId === userInfo.id ? (
+
+                        <div className={message.userId === userInfo.id ? "chat-message-user" : "chat-message-friend"}>
+                            <div className="chat-message-top">
+                                {message.userId !== userInfo.id && chatRoom.numUsers > 1 && (
                                     <p className="chat_name">{message.username}</p>
-                                </div>
-                                <div className="chat-message-bottom">
-                                    <p className="chat-message-text">{message.message}</p>
-                                    <p className="chat_timestamp">{message.createdAt}</p>
-                                </div>
+                                )}
                             </div>
-                        )
+                            <div className="chat-message-bottom">
+                                <p className="chat-message-text">{message.message}</p>
+                                <p className="chat_timestamp">{message.createdAt}</p>
+                            </div>
+                        </div>
+
+                        // ) : (
+                        //     <div className="chat-message-friend">
+                        //         <div className="chat-message-top">
+                        //             <p className="chat_name">{message.username}</p>
+                        //         </div>
+                        //         <div className="chat-message-bottom">
+                        //             <p className="chat-message-text">{message.message}</p>
+                        //             <p className="chat_timestamp">{message.createdAt}</p>
+                        //         </div>
+                        //     </div>
+                        // )
                     ))
                 )}
             </div>

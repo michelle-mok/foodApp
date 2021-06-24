@@ -6,7 +6,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import Rooms from './Rooms.jsx';
-import { foodAppContext, loadRooms } from '../store';
+import { foodAppContext, getOneUser, loadRooms } from '../store';
 
 function RoomList() {
     const [rooms, setRooms] = useState([]);
@@ -14,15 +14,19 @@ function RoomList() {
     const { userInfo } = store;
 
     useEffect(() => {
+        if (!userInfo) {
+            getOneUser(dispatch);
+        }
         loadRooms(setRooms);
     }, []);
 
     return (
         <div className="sidebar">
-            <div className="sidebar_header">
-                <Avatar src={userInfo.profilePic} />
-                <div className="sidebar_headerRight">
-                    {/* <IconButton>
+            {userInfo && (
+                <div className="sidebar_header">
+                    <Avatar src={userInfo.profilePic} />
+                    <div className="sidebar_headerRight">
+                        {/* <IconButton>
                         <DonutLargeIcon />
                     </IconButton>
                     <IconButton>
@@ -31,15 +35,16 @@ function RoomList() {
                     <IconButton>
                         <MoreVertIcon />
                     </IconButton> */}
-                    <h2>Chats</h2>
+                        <h2>Chats</h2>
+                    </div>
                 </div>
-            </div>
-            <div className="sidebar_search">
+            )}
+            {/* <div className="sidebar_search">
                 <div className="sidebar_searchContainer">
                     <SearchIcon />
                     <input type="text" placeholder="search" />
                 </div>
-            </div>
+            </div> */}
             <div className="sidebar_chats">
                 <Rooms rooms={rooms} />
             </div>

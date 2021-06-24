@@ -1,8 +1,14 @@
 .locate {
     position: absolute;
     z-index: 2;
-    top: 60px;
-    right: 5px;
+    top: 30px;
+    right: 20px;
+    border-radius: 50px;
     background-color: transparent;
     border: none;
+}
+
+.locate svg {
+    font-size: 40px;
+    color: #555;
 }

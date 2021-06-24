@@ -16,6 +16,7 @@ import LoginSignupHeader from './components/LoginSignupHeader';
 import Results from './components/Results.jsx';
 import RoomList from './components/RoomList.jsx';
 import Edit from './components/Edit.jsx';
+import PhotoUploads from './components/PhotoUploads';
 
 function App() {
 

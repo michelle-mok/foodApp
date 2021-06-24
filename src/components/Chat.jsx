@@ -90,34 +90,21 @@ function Chat() {
             })
             .catch((error) => console.log(error));
     }
-
+    console.log('chatroom details', chatRoom);
     console.log('chatroom', chatroom);
     return (
 
-
         <div className="chat">
-            <div className="chat_header">
-                <Avatar />
-                <>
-                    {chatRoom && messages && (
-                        <div className="chat_headerInfo">
-                            <h3>{chatRoom.name}</h3>
-                            {/* <p>Last seen at {messages[messages.length - 1].createdAt}</p> */}
-                        </div>
-                    )}
-                </>
-                {/* <div className="chat_headerRight">
-                    <IconButton>
-                        <SearchOutlined />
-                    </IconButton>
-                    <IconButton>
-                        <AttachFile />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVert />
-                    </IconButton>
-                </div> */}
-            </div>
+            {chatRoom && messages && (
+
+                <div className="chat_header">
+                    <Avatar src={chatRoom.profilepic} />
+                    <div className="chat_headerInfo">
+                        <h3>{chatRoom.displayName}</h3>
+                        {/* <p>Last seen at {messages[messages.length - 1].createdAt}</p> */}
+                    </div>
+                </div>
+            )}
             <div className="chat_body">
                 {messages && (
                     messages.map((message) => (
@@ -134,7 +121,7 @@ function Chat() {
                         ) : (
                             <div className="chat-message-friend">
                                 <div className="chat-message-top">
-                                    <p className="chat_name">{userInfo.username}</p>
+                                    <p className="chat_name">{message.username}</p>
                                 </div>
                                 <div className="chat-message-bottom">
                                     <p className="chat-message-text">{message.message}</p>

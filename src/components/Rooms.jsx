@@ -20,9 +20,9 @@ function Rooms({ rooms }) {
                         console.log('room', room.id);
                         return (
                             <div className="sidebarChat" value={room.id} key={room.id} onClick={() => handleChatClick(room.id)}>
-                                <Avatar />
+                                <Avatar src={room.profilepic} />
                                 <div className="sidebarChat_info">
-                                    <h2>{room.name}</h2>
+                                    <h2>{room.displayName}</h2>
                                     <p>{room.lastMessage}</p>
                                 </div>
                             </div>

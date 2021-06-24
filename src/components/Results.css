@@ -82,12 +82,13 @@
 .suggested-people-header {
     margin-top: 30px;
     margin-bottom: 30px;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .suggested-person-details {
     border: 1px solid lightgray;
-    border-radius: 40px;
+    border-radius: 10px;
     margin-bottom: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -113,6 +114,25 @@
 }
 
 .suggested-person-details h3 {
-    font-weight: 300;
+    font-weight: 500;
+    font-size: 17px;
     padding-left: 20px;
+}
+
+.suggested-person-button {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+    border: none;
+}
+
+.suggested-person-button svg {
+    font-size: 20px;
+    font-weight: 200;
+    color: #555;
+}
+
+.suggested-person-button:hover {
+    cursor: pointer;
 }

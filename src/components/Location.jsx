@@ -78,24 +78,43 @@ function Location() {
         }
 
         placesServiceRef.current.textSearch(placesRequest, ((response, status) => {
-
+            console.log(response);
             const filteredResult = [];
+            let counter = 0;
             response.forEach((foodOutlet) => {
-                if (foodOutlet.rating > 4 && foodOutlet.business_status === "OPERATIONAL" && filteredResult.length < 3) {
+                if (foodOutlet.rating > 4 && foodOutlet.business_status === "OPERATIONAL" && counter < 3) {
                     const { name } = foodOutlet;
                     const address = foodOutlet.formatted_address;
                     let photoUrl;
                     if (foodOutlet.photos && foodOutlet.photos.length > 0) {
                         photoUrl = foodOutlet.photos[0].getUrl();
-
+                    } else {
+                        photoUrl = null;
                     }
-                    filteredResult.push({ name, address, photoUrl });
+
+                    let websiteUrl;
+                    const websiteRequest = {
+                        placeId: foodOutlet.place_id,
+                        fields: ['website']
+                    }
+                    placesServiceRef.current.getDetails(websiteRequest, (result, status) => {
+                        console.log('url search result', result);
+                        websiteUrl = result.website;
+                        console.log('website url', websiteUrl);
+                        console.log('filtered result inside get details');
+                        filteredResult.push({ name, address, photoUrl, websiteUrl });
+                        if (counter === 3) {
+                            getResults(dispatch, filteredResult, history);
+                        }
+                        console.log('filtered', filteredResult);
+                    });
+                    counter += 1;
                 }
+                console.log('bananananaaa======')
+
             })
 
             console.log('status', status);
-            console.log('filtered', filteredResult);
-            getResults(dispatch, filteredResult, history);
         }))
     }
 
@@ -109,9 +128,9 @@ function Location() {
             <button type="submit" className="submit-button" onClick={handleSubmit}>Ready!</button>
 
             <GoogleMap mapContainerStyle={mapContainerStyle} zoom={11} center={center} onClick={handleClick} onLoad={(map) => onMapLoad(map)}>
-                {markers && (markers.map((marker) => {
+                {markers && (markers.map((marker, index) => {
                     return (
-                        <Marker key={marker.time.toISOString()} position={{ lat: marker.lat, lng: marker.lng }} onClick={() => { setSelected(marker) }} />
+                        <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} onClick={() => { setSelected(marker) }} />
                     )
                 }))}
             </GoogleMap>

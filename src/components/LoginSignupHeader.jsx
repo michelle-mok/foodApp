@@ -20,24 +20,12 @@ function LoginSignupHeader() {
     return (
         <div className="login-signup">
             <div className="login-signup-header">
-                {loginSelected ? (
-                    <div className="active" onClick={handleLoginClick}>
-                        <h3>Log in</h3>
-                    </div>
-                ) : (
-                    <div className="inactive" onClick={handleLoginClick}>
-                        <h3>Log in</h3>
-                    </div>
-                )}
-                {signupSelected ? (
-                    <div className="active" onClick={handleSignupClick}>
-                        <h3>Sign up</h3>
-                    </div>
-                ) : (
-                    <div className="inactive" onClick={handleSignupClick}>
-                        <h3>Sign up</h3>
-                    </div>
-                )}
+                <div className={loginSelected ? "active" : "inactive"} onClick={handleLoginClick}>
+                    <h3>Log in</h3>
+                </div>
+                <div className={signupSelected ? "active" : "inactive"} onClick={handleSignupClick}>
+                    <h3>Sign up</h3>
+                </div>
             </div>
             {loginSelected && (
                 <Login />

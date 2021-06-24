@@ -6,6 +6,7 @@ import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import './Signup.css';
 import { useHistory } from 'react-router-dom';
+import PhotoUploads from './PhotoUploads';
 
 function Edit() {
     const history = useHistory();
@@ -17,6 +18,7 @@ function Edit() {
     const [lastname, setLastName] = useState(userInfo.lastName);
     const [username, setUsername] = useState(userInfo.username);
     const [email, setEmail] = useState(userInfo.email);
+    const [image, setImage] = useState(userInfo.profilePic);
 
     useEffect(() => {
         console.log('user cuisines edit page', userCuisines);
@@ -39,12 +41,13 @@ function Edit() {
             return checkedState;
         })
 
-        setFirstName('');
-        setLastName('');
-        setUsername('');
-        setEmail('');
+        // setFirstName('');
+        // setLastName('');
+        // setUsername('');
+        // setEmail('');
+        // setImage('');
         console.log('user xuisine array', userCuisineArray);
-        updateUser(dispatch, firstname, lastname, username, email, userCuisineArray);
+        updateUser(dispatch, firstname, lastname, username, email, image, userCuisineArray);
         history.push('/home');
     }
 
@@ -85,6 +88,7 @@ function Edit() {
                             <input type="email" className="email-input" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                     </div>
+                    <PhotoUploads image={image} setImage={setImage} />
                     {cuisines && checkedState && (
                         <>
                             <div className="cuisine-header">

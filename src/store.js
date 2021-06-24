@@ -169,7 +169,7 @@ export function getCheckedState (dispatch, checkedStateArray) {
 }
 
 // ######## backend requests #######
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
+const BACKEND_URL = 'http://localhost:3004';
 
 export function getUsers(setUsers) {
     axios
@@ -241,7 +241,7 @@ export function getChatRoom (id, setChatRoom, setMessages) {
         })
         .then((response) => {
             console.log(response.data);
-            setChatRoom(response.data.chatRoom);
+            setChatRoom(response.data.chatroomDetails);
             setMessages(response.data.messageArray);
         })
         .catch((error) => console.log(error));
@@ -271,7 +271,7 @@ export function loadCuisines (setCuisines, setCheckedState) {
         .catch((error) => console.log(error));
 } 
 
-export function newUser (dispatch, history, firstname, lastname, username, email, password, userCuisineArray) {
+export function newUser (dispatch, history, firstname, lastname, username, email, password, image, userCuisineArray) {
     axios
         .post(BACKEND_URL + '/userInfo', {
             firstName: firstname,
@@ -279,6 +279,7 @@ export function newUser (dispatch, history, firstname, lastname, username, email
             username: username,
             email: email,
             password: password,
+            profilePic: image,
             cuisines: userCuisineArray
         })
         .then((response) => {
@@ -290,18 +291,19 @@ export function newUser (dispatch, history, firstname, lastname, username, email
         .catch((error) => console.log(error))
 }
 
-export function updateUser (dispatch, firstname, lastname, username, email, userCuisineArray) {
+export function updateUser (dispatch, firstname, lastname, username, email, image, userCuisineArray) {
     axios
         .put(BACKEND_URL + '/updateUserInfo', {
             firstName: firstname,
             lastName: lastname,
             username: username,
             email: email,
+            profilePic: image,
             cuisines: userCuisineArray
         })
         .then((response) => {
             console.log(response.data);
-            dispatch(loadUser(response.data.update[1]));
+            dispatch(loadUser(response.data.update[1][0]));
             dispatch(loadUserCuisines(response.data.updatedCuisines[1]));
         })
         .catch((error) => console.log(error))
@@ -326,5 +328,21 @@ export function getEditPageCuisines (setCheckedState, setCuisines, userCuisines)
             setCheckedState(updatedCuisineState);
         })
         .catch((error) => console.log(error));
+}
 
+export function uploadPhoto (formData, setImage) {
+    console.log('inside upload photo');
+    axios
+        .post(BACKEND_URL + '/images', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+        .then((response) => {
+            console.log(response.data);
+            setImage(response.data);
+        })
+        .catch ((error) =>  {
+            console.log(error);
+        })
+}
+
+export function getPhoto (image) {
+    console.log('image path')
 }

@@ -1,0 +1,47 @@
+.dropzone {
+    height: 120px;
+    width: 120px;
+    background-color: rgb(230, 228, 228);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropzone p {
+    text-align: center;
+    font-weight: 400;
+}
+
+.uploaded-pic {
+    width: 100px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.uploaded-pic img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+}
+
+.profile-pic-header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+}
+
+.profile-pic-header svg {
+    padding: 0 10px 20px 10px
+}
+
+.profile-pic-form {
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile-pic {
+    padding-bottom: 50px;
+}

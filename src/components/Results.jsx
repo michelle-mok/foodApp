@@ -4,7 +4,7 @@ import './Results.css';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import ArrowForwardSharpIcon from '@material-ui/icons/ArrowForwardSharp';
-import { PersonOutline } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 function Results() {
@@ -13,6 +13,7 @@ function Results() {
     const [suggestedPeople, setSuggestedPeople] = useState([]);
     let history = useHistory();
     console.log('results', results);
+    console.log('friends', friends);
 
     useEffect(() => {
         if (friends === null) {
@@ -21,21 +22,27 @@ function Results() {
     }, []);
 
     const handleClick = () => {
-        const friendIds = [];
+        const ids = [];
         friends.forEach((friend) => {
-            friendIds.push(friend.id);
+            ids.push(friend.id);
         })
-        friendIds.push(userInfo.id);
 
-        const friendNames = [];
-        friends.forEach((friend) => {
-            friendNames.push(friend.username);
-        })
-        const roomName = friendNames.join(' + ');
+        ids.push(userInfo.id);
+        const roomName = ids.sort().join('');
         console.log(roomName);
-        setupChatRoom(friendIds, roomName, history, dispatch);
+        setupChatRoom(ids, roomName, history, dispatch);
     }
 
+    const handleSuggestedPersonClick = (id) => {
+        console.log('person id', id);
+        const ids = [];
+        ids.push(id);
+        ids.push(userInfo.id);
+        const roomName = ids.sort().join('');
+        setupChatRoom(ids, roomName, history, dispatch);
+    }
+
+    console.log('results', results);
     return (
         <div className="results">
             <div className="results-header">
@@ -60,12 +67,15 @@ function Results() {
                                         <div className="result-button" onClick={handleClick}>
                                             <ChatOutlinedIcon />
                                             <ArrowForwardSharpIcon />
+
                                         </div>
                                     )}
                                     <div className="result-text">
                                         {result.name}
                                         <br></br>
                                         {result.address}
+                                        <br></br>
+                                        {result.websiteUrl}
                                     </div>
                                 </div>
                             </div>
@@ -86,6 +96,10 @@ function Results() {
                                                 <img src={person.profilePic} />
                                             </div>
                                             <h3>{person.username}</h3>
+                                            <button className="suggested-person-button" onClick={() => handleSuggestedPersonClick(person.id)}>
+                                                <ChatOutlinedIcon />
+                                                <ArrowForwardSharpIcon />
+                                            </button>
                                         </div>
                                     )
                                 })}

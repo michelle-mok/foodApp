@@ -7,6 +7,7 @@ import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { foodAppContext, loadCuisines, newUser, getCheckedState } from '../store';
 import { useHistory } from 'react-router-dom';
+import PhotoUploads from './PhotoUploads';
 
 function Signup() {
     let history = useHistory();
@@ -18,6 +19,7 @@ function Signup() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [image, setImage] = useState('');
 
     useEffect(() => {
         loadCuisines(setCuisines, setCheckedState);
@@ -42,7 +44,7 @@ function Signup() {
         getCheckedState(dispatch, checkedState);
         console.log('user xuisine array', userCuisineArray);
 
-        newUser(dispatch, history, firstname, lastname, username, email, password, userCuisineArray);
+        newUser(dispatch, history, firstname, lastname, username, email, password, image, userCuisineArray);
     }
 
     return (
@@ -79,6 +81,7 @@ function Signup() {
                         <input type="email" className="email-input" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </div>
+                <PhotoUploads image={image} setImage={setImage} />
                 {cuisines && checkedState && (
                     <>
                         <div className="cuisine-header">

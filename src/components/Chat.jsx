@@ -5,7 +5,7 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import SendIcon from '@material-ui/icons/Send';
-import { foodAppContext, getChatRoom, getOneUser } from '../store.js';
+import { foodAppContext, getChatRoom, getOneUser, postMessage } from '../store.js';
 import Picker from 'emoji-picker-react';
 import { useParams } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ function Chat() {
     const { id } = useParams();
 
     useEffect(() => {
-        if (chatroom !== null) {
+        if (chatroom !== null && userInfo !== null) {
             getChatRoom(chatroom, setChatRoom, setMessages);
         } else {
             // if (friends) {
@@ -79,20 +79,25 @@ function Chat() {
         event.preventDefault();
         console.log('chat room', chatRoom);
         console.log('messages', messages);
-        const BACKEND_URL = 'http://localhost:3004';
-        axios
-            .post(BACKEND_URL + '/newMessage', {
-                roomId: chatRoom.id,
-                message: input,
-            })
-            .then((response) => {
-                console.log(response.data);
-                setInput('');
-            })
-            .catch((error) => console.log(error));
+        // const BACKEND_URL = 'http://localhost:3004';
+        // axios
+        //     .post(BACKEND_URL + '/newMessage', {
+        //         roomId: chatRoom.id,
+        //         userName: userInfo.username,
+        //         message: input,
+        //     })
+        //     .then((response) => {
+        //         console.log(response.data);
+        //         setInput('');
+        //     })
+        //     .catch((error) => console.log(error));
+        postMessage(chatRoom, userInfo, input, setInput);
     }
     console.log('chatroom details', chatRoom);
     console.log('chatroom', chatroom);
+    console.log('message', messages);
+    console.log('userInfo', userInfo);
+
     return (
 
         <div className="chat">
@@ -114,7 +119,7 @@ function Chat() {
                         <div className={message.userId === userInfo.id ? "chat-message-user" : "chat-message-friend"}>
                             <div className="chat-message-top">
                                 {message.userId !== userInfo.id && chatRoom.numUsers > 1 && (
-                                    <p className="chat_name">{message.username}</p>
+                                    <p className="chat_name">{message.userName}</p>
                                 )}
                             </div>
                             <div className="chat-message-bottom">

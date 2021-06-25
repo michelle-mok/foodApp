@@ -17,11 +17,11 @@ function Locate({ panTo }) {
     }
 
     return (
-        <button className="locate" onClick={handleClick}>
+        <div className="locate" onClick={handleClick}>
             <IconButton>
                 <ExploreOutlinedIcon />
             </IconButton>
-        </button>
+        </div>
     )
 }
 

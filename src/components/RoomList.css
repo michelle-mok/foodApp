@@ -12,6 +12,7 @@
     justify-content: flex-start;
     padding: 30px 20px;
     border-right: 1px solid lightgray;
+    background-color: paleturquoise;
 }
 
 .sidebar_headerRight {

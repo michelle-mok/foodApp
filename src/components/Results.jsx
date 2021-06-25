@@ -64,7 +64,7 @@ function Results() {
                                 </div>
                                 <div className="result-bottom">
                                     {friends && (
-                                        <div className="result-button" onClick={handleClick}>
+                                        <div className="result-button" onClick={handleClick()}>
                                             <ChatOutlinedIcon />
                                         </div>
                                     )}
@@ -73,7 +73,7 @@ function Results() {
                                         <br></br>
                                         {result.address}
                                         <br></br>
-                                        {result.websiteUrl}
+                                        <a href={result.websiteUrl}>{result.websiteUrl}</a>
                                     </div>
                                 </div>
                             </div>

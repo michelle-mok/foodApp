@@ -42,7 +42,6 @@ function Criteria() {
 
     useEffect(() => {
         if (!userInfo) {
-            console.log('inside useeffect');
             getOneUser(dispatch);
         }
         getUsers(setUsers);

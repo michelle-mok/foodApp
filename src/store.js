@@ -169,7 +169,7 @@ export function getCheckedState (dispatch, checkedStateArray) {
 }
 
 // ######## backend requests #######
-const BACKEND_URL = 'http://localhost:3004';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
 export function getUsers(setUsers) {
     axios
@@ -269,6 +269,20 @@ export function loadRooms (setRooms) {
         })
 }
 
+export function postMessage (chatRoom, userInfo, input, setInput) {
+    axios
+            .post(BACKEND_URL + '/newMessage', {
+                roomId: chatRoom.id,
+                userName: userInfo.username,
+                message: input,
+            })
+            .then((response) => {
+                console.log(response.data);
+                setInput('');
+            })
+            .catch((error) => console.log(error));
+}
+
 export function loadCuisines (setCuisines, setCheckedState) {
     axios
         .get(BACKEND_URL + '/cuisines')
@@ -358,5 +372,8 @@ export function userLogout (history) {
         .then((response) => {
             console.log(response.data);
             history.push('/');
+        })
+        .catch((error) => {
+            console.log(error);
         })
 }

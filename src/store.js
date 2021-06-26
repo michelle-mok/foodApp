@@ -169,7 +169,7 @@ export function getCheckedState (dispatch, checkedStateArray) {
 }
 
 // ######## backend requests #######
-const BACKEND_URL ="http://thawing-woodland-07412.herokuapp.com";
+const BACKEND_URL ="thawing-woodland-07412.herokuapp.com";
 
 export function getUsers(setUsers) {
     axios

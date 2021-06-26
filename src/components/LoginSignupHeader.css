@@ -54,4 +54,5 @@
 
 .inactive {
     border-bottom: 4px solid #ecf0f3;
+    cursor: pointer;
 }

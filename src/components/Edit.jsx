@@ -62,7 +62,7 @@ function Edit() {
                             <EditIcon />
                         </div>
                         <div className="heading-text">
-                            <div className="signup-title">Edit details  </div>
+                            <div className="signup-title">Change details  </div>
                             <div className="signup-sub-title">Need to make changes?</div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@ function Edit() {
                                     <RestaurantOutlinedIcon />
                                 </div>
                                 <div className="cuisine-text">
-                                    Pick your favourite food
+                                    Update your choices
                                 </div>
                             </div>
                             <div className="cuisines">

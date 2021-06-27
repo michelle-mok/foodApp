@@ -140,7 +140,7 @@ function Criteria() {
                 <div className="criteria-header-icon">
                     <FaceIcon />
                 </div>
-                Choose your friends
+                Choose your friends (this can be left blank if you wish)
             </div>
             {users && (
                 <div className="select">
